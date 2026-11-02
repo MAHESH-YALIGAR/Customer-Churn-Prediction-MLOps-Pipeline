@@ -13,7 +13,7 @@ class DataIngestion:
     except Exception as e:
       raise MyException(e,sys)
   
-  def get_data_from_source(self):    
+  def get_data_from_source(self)->pd.DataFrame:    
     try:
       logging.info("Reading customer churn dataset from source")
       url=self.data_ingestion_config.source_url
@@ -21,6 +21,7 @@ class DataIngestion:
       logging.info(
                 f"Dataset successfully retrieved. Shape: {df.shape}"
             )
+      return df
     except Exception as e:
       logging.exception("Error while saving raw dataset")
       raise MyException(e,sys)
@@ -62,10 +63,10 @@ class DataIngestion:
 
             # Step 2: Save raw dataset
             raw_data_file_path = self.save_data(df)
-
+            print("the saved dataset folder is -->",raw_data_file_path)
             # Step 3: Create ingestion artifact
             data_ingestion_artifact = DataIngestionArtifact(
-                raw_data_file_path=raw_data_file_path
+              raw_data_file_path
             )
 
             logging.info("Data ingestion completed successfully")
