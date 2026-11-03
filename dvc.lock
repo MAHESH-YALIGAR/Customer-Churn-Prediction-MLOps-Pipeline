@@ -1,0 +1,279 @@
+schema: '2.0'
+stages:
+  data_ingestion:
+    cmd: python -c "from src.Components.data_ingestion import DataIngestion; 
+      from src.utils import get_data_ingestion_config; 
+      DataIngestion(get_data_ingestion_config()).initiate_data_ingestion()"
+    deps:
+    - path: Notebook/WA_Fn-UseC_-Telco-Customer-Churn.csv
+      hash: md5
+      md5: 0f9de68e012bd3aed5fa7cdc9fc421af
+      size: 977501
+    - path: src/Components/data_ingestion.py
+      hash: md5
+      md5: 828dd15fcb6094bbfd1914afc33bdbd0
+      size: 2557
+    - path: src/constants/__init__.py
+      hash: md5
+      md5: bd5fff47ea188bf8bbed056ea82fa4a7
+      size: 1930
+    - path: src/entity/artifact_entity.py
+      hash: md5
+      md5: 3010422ee9b3f863ab07ae26bb60d1ed
+      size: 875
+    - path: src/entity/config_entity.py
+      hash: md5
+      md5: f5c6f6d6f957079bb8cbc61d98c38589
+      size: 2114
+    - path: src/exception/__init__.py
+      hash: md5
+      md5: 5baf671152d73a06c9fb5eae8e07aa19
+      size: 1816
+    - path: src/logger/__init__.py
+      hash: md5
+      md5: d88caba73dadc475d8ab98cb98f990f3
+      size: 1428
+    - path: src/utils.py
+      hash: md5
+      md5: b88eafea22b77584b5088961db2dc91a
+      size: 932
+    outs:
+    - path: data/raw/customer_churn.csv
+      hash: md5
+      md5: 7f07de26b054de4c36eed95a1277fe21
+      size: 978285
+  data_validation:
+    cmd: python -c "from src.Components.data_validation import DataValidation; 
+      from src.entity.artifact_entity import DataIngestionArtifact; from 
+      src.utils import get_data_ingestion_config, get_data_validation_config; 
+      DataValidation( 
+      data_ingestion_artifact=DataIngestionArtifact(raw_data_file_path=get_data_ingestion_config().raw_data_file_path),
+      data_validation_config=get_data_validation_config() 
+      ).initiate_data_validation()"
+    deps:
+    - path: data/raw/customer_churn.csv
+      hash: md5
+      md5: 7f07de26b054de4c36eed95a1277fe21
+      size: 978285
+    - path: src/Components/data_validation.py
+      hash: md5
+      md5: 8a7450bad39359538016c93985a07adb
+      size: 8015
+    - path: src/constants/__init__.py
+      hash: md5
+      md5: bd5fff47ea188bf8bbed056ea82fa4a7
+      size: 1930
+    - path: src/entity/artifact_entity.py
+      hash: md5
+      md5: 3010422ee9b3f863ab07ae26bb60d1ed
+      size: 875
+    - path: src/entity/config_entity.py
+      hash: md5
+      md5: f5c6f6d6f957079bb8cbc61d98c38589
+      size: 2114
+    - path: src/exception/__init__.py
+      hash: md5
+      md5: 5baf671152d73a06c9fb5eae8e07aa19
+      size: 1816
+    - path: src/logger/__init__.py
+      hash: md5
+      md5: d88caba73dadc475d8ab98cb98f990f3
+      size: 1428
+    - path: src/utils.py
+      hash: md5
+      md5: b88eafea22b77584b5088961db2dc91a
+      size: 932
+    outs:
+    - path: artifacts/data_validation_report.json
+      hash: md5
+      md5: 3eb858baf2ebeda11b30d9b6d6fbd94b
+      size: 257
+  data_transformation:
+    cmd: python -c "from src.Components.data_transformation import 
+      DataTransformation; from src.entity.artifact_entity import 
+      DataIngestionArtifact; from src.utils import 
+      get_data_ingestion_config,get_data_transformation_config; 
+      DataTransformation( 
+      data_ingestion_artifact=DataIngestionArtifact(raw_data_file_path=get_data_ingestion_config().raw_data_file_path),
+      data_transformation_config=get_data_transformation_config() 
+      ).initiate_data_transformation()"
+    deps:
+    - path: artifacts/data_validation_report.json
+      hash: md5
+      md5: 3eb858baf2ebeda11b30d9b6d6fbd94b
+      size: 257
+    - path: data/raw/customer_churn.csv
+      hash: md5
+      md5: 7f07de26b054de4c36eed95a1277fe21
+      size: 978285
+    - path: src/Components/data_transformation.py
+      hash: md5
+      md5: e53cffacc5999cd08401bb3bce979d94
+      size: 6162
+    - path: src/constants/__init__.py
+      hash: md5
+      md5: bd5fff47ea188bf8bbed056ea82fa4a7
+      size: 1930
+    - path: src/entity/artifact_entity.py
+      hash: md5
+      md5: 3010422ee9b3f863ab07ae26bb60d1ed
+      size: 875
+    - path: src/entity/config_entity.py
+      hash: md5
+      md5: f5c6f6d6f957079bb8cbc61d98c38589
+      size: 2114
+    - path: src/exception/__init__.py
+      hash: md5
+      md5: 5baf671152d73a06c9fb5eae8e07aa19
+      size: 1816
+    - path: src/logger/__init__.py
+      hash: md5
+      md5: d88caba73dadc475d8ab98cb98f990f3
+      size: 1428
+    - path: src/utils.py
+      hash: md5
+      md5: b88eafea22b77584b5088961db2dc91a
+      size: 932
+    outs:
+    - path: artifacts/transformed
+      hash: md5
+      md5: 6a415dafa5696b0eb85c1fbb0ebd4df4.dir
+      size: 2770326
+      nfiles: 5
+  model_trainer:
+    cmd: python -c "from src.Components.model_trainer import ModelTrainer; from 
+      src.entity.artifact_entity import DataTransformationArtifact; from 
+      src.entity.config_entity import ModelTrainerConfig; from src.utils import 
+      get_data_transformation_config; config = get_data_transformation_config();
+      ModelTrainer( data_transformation_artifact=DataTransformationArtifact( 
+      train_features_path=config.train_features_path, 
+      test_features_path=config.test_features_path, 
+      train_target_path=config.train_target_path, 
+      test_target_path=config.test_target_path, 
+      preprocessor_file_path=config.preprocessor_file_path ), 
+      model_trainer_config=ModelTrainerConfig(trained_model_dir='artifacts/models')
+      ).initiate_model_training()"
+    deps:
+    - path: artifacts/transformed/X_train.pkl
+      hash: md5
+      md5: 104bcca78aab85ed8e6f1557e24f99cb
+      size: 2028481
+    - path: artifacts/transformed/y_train.pkl
+      hash: md5
+      md5: bc411fe02c9eeef277b0f87c5da22264
+      size: 181072
+    - path: src/Components/model_trainer.py
+      hash: md5
+      md5: a38cd0fce916b54d70f9826521dbd813
+      size: 4918
+    - path: src/constants/__init__.py
+      hash: md5
+      md5: bd5fff47ea188bf8bbed056ea82fa4a7
+      size: 1930
+    - path: src/entity/artifact_entity.py
+      hash: md5
+      md5: 3010422ee9b3f863ab07ae26bb60d1ed
+      size: 875
+    - path: src/entity/config_entity.py
+      hash: md5
+      md5: f5c6f6d6f957079bb8cbc61d98c38589
+      size: 2114
+    - path: src/exception/__init__.py
+      hash: md5
+      md5: 5baf671152d73a06c9fb5eae8e07aa19
+      size: 1816
+    - path: src/logger/__init__.py
+      hash: md5
+      md5: d88caba73dadc475d8ab98cb98f990f3
+      size: 1428
+    - path: src/utils.py
+      hash: md5
+      md5: b88eafea22b77584b5088961db2dc91a
+      size: 932
+    outs:
+    - path: artifacts/models/decision_tree.pkl
+      hash: md5
+      md5: c1ab4e1da1a7be6844750acf59252721
+      size: 200281
+    - path: artifacts/models/logistic_regression.pkl
+      hash: md5
+      md5: ae473027caef41796c6fd00a5229c5f6
+      size: 1231
+    - path: artifacts/models/random_forest.pkl
+      hash: md5
+      md5: ed63657cae5f290f798b49937c58d54b
+      size: 40819769
+  model_evaluation:
+    cmd: python -c "from src.Components.model_evaluation import ModelEvaluation;
+      from src.entity.artifact_entity import DataTransformationArtifact, 
+      ModelTrainerArtifact; from src.entity.config_entity import 
+      ModelEvaluationConfig; from src.utils import 
+      get_data_transformation_config; config = get_data_transformation_config();
+      ModelEvaluation( data_transformation_artifact=DataTransformationArtifact( 
+      train_features_path=config.train_features_path, 
+      test_features_path=config.test_features_path, 
+      train_target_path=config.train_target_path, 
+      test_target_path=config.test_target_path, 
+      preprocessor_file_path=config.preprocessor_file_path ), 
+      model_trainer_artifact=ModelTrainerArtifact( 
+      logistic_regression_model_path='artifacts/models/logistic_regression.pkl',
+      decision_tree_model_path='artifacts/models/decision_tree.pkl', 
+      random_forest_model_path='artifacts/models/random_forest.pkl' ), 
+      model_evaluation_config=ModelEvaluationConfig( 
+      model_evaluation_dir='artifacts/model_evaluation', 
+      model_evaluation_report_path='artifacts/model_evaluation/model_evaluation_report.json'
+      ) ).initiate_model_evaluation()"
+    deps:
+    - path: artifacts/models/decision_tree.pkl
+      hash: md5
+      md5: c1ab4e1da1a7be6844750acf59252721
+      size: 200281
+    - path: artifacts/models/logistic_regression.pkl
+      hash: md5
+      md5: ae473027caef41796c6fd00a5229c5f6
+      size: 1231
+    - path: artifacts/models/random_forest.pkl
+      hash: md5
+      md5: ed63657cae5f290f798b49937c58d54b
+      size: 40819769
+    - path: artifacts/transformed/X_test.pkl
+      hash: md5
+      md5: 4d74ddc85b696380e041c2c95bc7ac1e
+      size: 507481
+    - path: artifacts/transformed/y_test.pkl
+      hash: md5
+      md5: f4585ddd928185ca5228ba134e3946fb
+      size: 45880
+    - path: src/Components/model_evaluation.py
+      hash: md5
+      md5: 2d01b24edc765bd93b88023bbbfdbd91
+      size: 5270
+    - path: src/constants/__init__.py
+      hash: md5
+      md5: bd5fff47ea188bf8bbed056ea82fa4a7
+      size: 1930
+    - path: src/entity/artifact_entity.py
+      hash: md5
+      md5: 3010422ee9b3f863ab07ae26bb60d1ed
+      size: 875
+    - path: src/entity/config_entity.py
+      hash: md5
+      md5: f5c6f6d6f957079bb8cbc61d98c38589
+      size: 2114
+    - path: src/exception/__init__.py
+      hash: md5
+      md5: 5baf671152d73a06c9fb5eae8e07aa19
+      size: 1816
+    - path: src/logger/__init__.py
+      hash: md5
+      md5: d88caba73dadc475d8ab98cb98f990f3
+      size: 1428
+    - path: src/utils.py
+      hash: md5
+      md5: b88eafea22b77584b5088961db2dc91a
+      size: 932
+    outs:
+    - path: artifacts/model_evaluation/model_evaluation_report.json
+      hash: md5
+      md5: 17692cf28f27bd0aaeddc7e801106710
+      size: 1390

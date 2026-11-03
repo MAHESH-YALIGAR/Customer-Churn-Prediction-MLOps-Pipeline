@@ -1,0 +1,137 @@
+stages:
+  data_ingestion:
+    cmd: >-
+      python -c "from src.Components.data_ingestion import DataIngestion; from
+      src.utils import get_data_ingestion_config;
+      DataIngestion(get_data_ingestion_config()).initiate_data_ingestion()"
+    deps:
+      - Notebook/WA_Fn-UseC_-Telco-Customer-Churn.csv
+      - src/Components/data_ingestion.py
+      - src/constants/__init__.py
+      - src/entity/artifact_entity.py
+      - src/entity/config_entity.py
+      - src/exception/__init__.py
+      - src/logger/__init__.py
+      - src/utils.py
+    outs:
+      - data/raw/customer_churn.csv
+
+
+  data_validation:
+    cmd: >-
+      python -c "from src.Components.data_validation import DataValidation;
+      from src.entity.artifact_entity import DataIngestionArtifact;
+      from src.utils import get_data_ingestion_config, get_data_validation_config;
+      DataValidation(
+      data_ingestion_artifact=DataIngestionArtifact(raw_data_file_path=get_data_ingestion_config().raw_data_file_path),
+      data_validation_config=get_data_validation_config()
+      ).initiate_data_validation()"
+    deps:
+      - data/raw/customer_churn.csv
+      - src/Components/data_validation.py
+      - src/entity/artifact_entity.py
+      - src/entity/config_entity.py
+      - src/constants/__init__.py
+      - src/exception/__init__.py
+      - src/logger/__init__.py
+      - src/utils.py
+    outs:
+      - artifacts/data_validation_report.json
+
+  
+  data_transformation:
+    cmd: >-
+      python -c "from src.Components.data_transformation import DataTransformation;
+      from src.entity.artifact_entity import DataIngestionArtifact;
+      from src.utils import get_data_ingestion_config,get_data_transformation_config;
+      DataTransformation(
+      data_ingestion_artifact=DataIngestionArtifact(raw_data_file_path=get_data_ingestion_config().raw_data_file_path),
+      data_transformation_config=get_data_transformation_config()
+      ).initiate_data_transformation()"
+
+    deps:
+      - data/raw/customer_churn.csv
+      - artifacts/data_validation_report.json
+      - src/Components/data_transformation.py
+      - src/entity/artifact_entity.py
+      - src/entity/config_entity.py
+      - src/constants/__init__.py
+      - src/exception/__init__.py
+      - src/logger/__init__.py
+      - src/utils.py
+    outs:
+      - artifacts/transformed
+  
+  model_trainer:
+    cmd: >-
+      python -c "from src.Components.model_trainer import ModelTrainer;
+      from src.entity.artifact_entity import DataTransformationArtifact;
+      from src.entity.config_entity import ModelTrainerConfig;
+      from src.utils import get_data_transformation_config;
+      config = get_data_transformation_config();
+      ModelTrainer(
+      data_transformation_artifact=DataTransformationArtifact(
+      train_features_path=config.train_features_path,
+      test_features_path=config.test_features_path,
+      train_target_path=config.train_target_path,
+      test_target_path=config.test_target_path,
+      preprocessor_file_path=config.preprocessor_file_path
+      ),
+      model_trainer_config=ModelTrainerConfig(trained_model_dir='artifacts/models')
+      ).initiate_model_training()"
+    deps:
+      - artifacts/transformed/X_train.pkl
+      - artifacts/transformed/y_train.pkl
+      - src/Components/model_trainer.py
+      - src/entity/artifact_entity.py
+      - src/entity/config_entity.py
+      - src/constants/__init__.py
+      - src/exception/__init__.py
+      - src/logger/__init__.py
+      - src/utils.py
+    outs:
+      - artifacts/models/logistic_regression.pkl
+      - artifacts/models/decision_tree.pkl
+      - artifacts/models/random_forest.pkl
+
+  model_evaluation:
+    cmd: >-
+      python -c "from src.Components.model_evaluation import ModelEvaluation;
+      from src.entity.artifact_entity import DataTransformationArtifact, ModelTrainerArtifact;
+      from src.entity.config_entity import ModelEvaluationConfig;
+      from src.utils import get_data_transformation_config;
+      config = get_data_transformation_config();
+      ModelEvaluation(
+      data_transformation_artifact=DataTransformationArtifact(
+      train_features_path=config.train_features_path,
+      test_features_path=config.test_features_path,
+      train_target_path=config.train_target_path,
+      test_target_path=config.test_target_path,
+      preprocessor_file_path=config.preprocessor_file_path
+      ),
+      model_trainer_artifact=ModelTrainerArtifact(
+      logistic_regression_model_path='artifacts/models/logistic_regression.pkl',
+      decision_tree_model_path='artifacts/models/decision_tree.pkl',
+      random_forest_model_path='artifacts/models/random_forest.pkl'
+      ),
+      model_evaluation_config=ModelEvaluationConfig(
+      model_evaluation_dir='artifacts/model_evaluation',
+      model_evaluation_report_path='artifacts/model_evaluation/model_evaluation_report.json'
+      )
+      ).initiate_model_evaluation()"
+    deps:
+      - artifacts/transformed/X_test.pkl
+      - artifacts/transformed/y_test.pkl
+      - artifacts/models/logistic_regression.pkl
+      - artifacts/models/decision_tree.pkl
+      - artifacts/models/random_forest.pkl
+      - src/Components/model_evaluation.py
+      - src/entity/artifact_entity.py
+      - src/entity/config_entity.py
+      - src/constants/__init__.py
+      - src/exception/__init__.py
+      - src/logger/__init__.py
+      - src/utils.py
+    metrics:
+      - artifacts/model_evaluation/model_evaluation_report.json:
+          cache: false
