@@ -277,3 +277,86 @@ stages:
       hash: md5
       md5: 17692cf28f27bd0aaeddc7e801106710
       size: 1390
+  model_pusher:
+    cmd: python -c "import json; from pathlib import Path; from 
+      src.Components.model_pusher import ModelPusher; from 
+      src.entity.artifact_entity import DataTransformationArtifact, 
+      ModelTrainerArtifact, ModelEvaluationArtifact; from 
+      src.entity.config_entity import ModelPusherConfig; from src.utils import 
+      get_data_transformation_config; config = get_data_transformation_config();
+      best_model = 
+      json.loads(Path('artifacts/model_evaluation/model_evaluation_report.json').read_text())['best_model'];
+      ModelPusher( data_transformation_artifact=DataTransformationArtifact( 
+      train_features_path=config.train_features_path, 
+      test_features_path=config.test_features_path, 
+      train_target_path=config.train_target_path, 
+      test_target_path=config.test_target_path, 
+      preprocessor_file_path=config.preprocessor_file_path ), 
+      model_trainer_artifact=ModelTrainerArtifact( 
+      logistic_regression_model_path='artifacts/models/logistic_regression.pkl',
+      decision_tree_model_path='artifacts/models/decision_tree.pkl', 
+      random_forest_model_path='artifacts/models/random_forest.pkl' ), 
+      model_evaluation_artifact=ModelEvaluationArtifact( 
+      model_evaluation_report_path='artifacts/model_evaluation/model_evaluation_report.json',
+      best_model_name=best_model['name'], 
+      best_model_score=best_model['f1_score'] ), 
+      model_pusher_config=ModelPusherConfig( 
+      model_pusher_dir='artifacts/model_pusher', 
+      pushed_model_path='artifacts/model_pusher/model.pkl', 
+      pushed_preprocessor_path='artifacts/model_pusher/preprocessor.pkl' ) 
+      ).initiate_model_pusher()"
+    deps:
+    - path: artifacts/model_evaluation/model_evaluation_report.json
+      hash: md5
+      md5: 17692cf28f27bd0aaeddc7e801106710
+      size: 1390
+    - path: artifacts/models/decision_tree.pkl
+      hash: md5
+      md5: c1ab4e1da1a7be6844750acf59252721
+      size: 200281
+    - path: artifacts/models/logistic_regression.pkl
+      hash: md5
+      md5: ae473027caef41796c6fd00a5229c5f6
+      size: 1231
+    - path: artifacts/models/random_forest.pkl
+      hash: md5
+      md5: ed63657cae5f290f798b49937c58d54b
+      size: 40819769
+    - path: artifacts/transformed/preprocessor.pkl
+      hash: md5
+      md5: 1434f0eaff9f7751c16b91ffde5453f2
+      size: 7412
+    - path: src/Components/model_pusher.py
+      hash: md5
+      md5: 3ffe11b8915697fe7d35ad3b8f419d6b
+      size: 3808
+    - path: src/constants/__init__.py
+      hash: md5
+      md5: bd5fff47ea188bf8bbed056ea82fa4a7
+      size: 1930
+    - path: src/entity/artifact_entity.py
+      hash: md5
+      md5: 3010422ee9b3f863ab07ae26bb60d1ed
+      size: 875
+    - path: src/entity/config_entity.py
+      hash: md5
+      md5: f5c6f6d6f957079bb8cbc61d98c38589
+      size: 2114
+    - path: src/exception/__init__.py
+      hash: md5
+      md5: 5baf671152d73a06c9fb5eae8e07aa19
+      size: 1816
+    - path: src/logger/__init__.py
+      hash: md5
+      md5: d88caba73dadc475d8ab98cb98f990f3
+      size: 1428
+    - path: src/utils.py
+      hash: md5
+      md5: b88eafea22b77584b5088961db2dc91a
+      size: 932
+    outs:
+    - path: artifacts/model_pusher
+      hash: md5
+      md5: 6b8bd542a17bfa2f64ab331934638c73.dir
+      size: 9341
+      nfiles: 2

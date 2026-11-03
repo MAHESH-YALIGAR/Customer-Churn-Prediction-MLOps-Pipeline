@@ -135,3 +135,53 @@ stages:
     metrics:
       - artifacts/model_evaluation/model_evaluation_report.json:
           cache: false
+
+  model_pusher:
+    cmd: >-
+      python -c "import json;
+      from pathlib import Path;
+      from src.Components.model_pusher import ModelPusher;
+      from src.entity.artifact_entity import DataTransformationArtifact, ModelTrainerArtifact, ModelEvaluationArtifact;
+      from src.entity.config_entity import ModelPusherConfig;
+      from src.utils import get_data_transformation_config;
+      config = get_data_transformation_config();
+      best_model = json.loads(Path('artifacts/model_evaluation/model_evaluation_report.json').read_text())['best_model'];
+      ModelPusher(
+      data_transformation_artifact=DataTransformationArtifact(
+      train_features_path=config.train_features_path,
+      test_features_path=config.test_features_path,
+      train_target_path=config.train_target_path,
+      test_target_path=config.test_target_path,
+      preprocessor_file_path=config.preprocessor_file_path
+      ),
+      model_trainer_artifact=ModelTrainerArtifact(
+      logistic_regression_model_path='artifacts/models/logistic_regression.pkl',
+      decision_tree_model_path='artifacts/models/decision_tree.pkl',
+      random_forest_model_path='artifacts/models/random_forest.pkl'
+      ),
+      model_evaluation_artifact=ModelEvaluationArtifact(
+      model_evaluation_report_path='artifacts/model_evaluation/model_evaluation_report.json',
+      best_model_name=best_model['name'],
+      best_model_score=best_model['f1_score']
+      ),
+      model_pusher_config=ModelPusherConfig(
+      model_pusher_dir='artifacts/model_pusher',
+      pushed_model_path='artifacts/model_pusher/model.pkl',
+      pushed_preprocessor_path='artifacts/model_pusher/preprocessor.pkl'
+      )
+      ).initiate_model_pusher()"
+    deps:
+      - artifacts/model_evaluation/model_evaluation_report.json
+      - artifacts/models/logistic_regression.pkl
+      - artifacts/models/decision_tree.pkl
+      - artifacts/models/random_forest.pkl
+      - artifacts/transformed/preprocessor.pkl
+      - src/Components/model_pusher.py
+      - src/entity/artifact_entity.py
+      - src/entity/config_entity.py
+      - src/constants/__init__.py
+      - src/exception/__init__.py
+      - src/logger/__init__.py
+      - src/utils.py
+    outs:
+      - artifacts/model_pusher
