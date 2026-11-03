@@ -1,13 +1,10 @@
 import sys
 
 from src.Components.model_evaluation import ModelEvaluation
-from  src.Components.model_pusher import ModelPusher
+from src.Components.model_pusher import ModelPusher
 from src.constants import (
-    DECISION_TREE_MODEL_PATH,
-    LOGISTIC_REGRESSION_MODEL_PATH,
     MODEL_EVALUATION_DIR,
     MODEL_EVALUATION_REPORT_PATH,
-    RANDOM_FOREST_MODEL_PATH,
     TEST_FEATURES_PATH,
     TEST_TARGET_PATH,
     TRAIN_FEATURES_PATH,
@@ -16,12 +13,11 @@ from src.constants import (
 )
 from src.entity.artifact_entity import (
     DataTransformationArtifact,
-    ModelTrainerArtifact,
 )
 from src.entity.config_entity import ModelEvaluationConfig
 from src.exception import MyException
 from src.logger import logging
-from src.utils import get_model_pusher_config
+from src.utils import get_model_pusher_config, get_model_trainer_artifact
 
 
 def main() -> None:
@@ -33,11 +29,7 @@ def main() -> None:
             test_target_path=TEST_TARGET_PATH,
             preprocessor_file_path=PREPROCESSOR_FILE_PATH,
         )
-        trainer_artifact = ModelTrainerArtifact(
-            logistic_regression_model_path=LOGISTIC_REGRESSION_MODEL_PATH,
-            decision_tree_model_path=DECISION_TREE_MODEL_PATH,
-            random_forest_model_path=RANDOM_FOREST_MODEL_PATH,
-        )
+        trainer_artifact = get_model_trainer_artifact()
         evaluation_config = ModelEvaluationConfig(
             model_evaluation_dir=MODEL_EVALUATION_DIR,
             model_evaluation_report_path=MODEL_EVALUATION_REPORT_PATH,

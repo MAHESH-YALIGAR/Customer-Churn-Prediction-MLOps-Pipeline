@@ -29,13 +29,21 @@ class DataTransformationArtifact:
 
 
 
+# @dataclass
+# class ModelTrainerArtifact:
+#     logistic_regression_model_path: str
+#     decision_tree_model_path: str
+#     random_forest_model_path: str
+    
 @dataclass
 class ModelTrainerArtifact:
     logistic_regression_model_path: str
     decision_tree_model_path: str
     random_forest_model_path: str
-    
-    
+
+    logistic_regression_run_id: str
+    decision_tree_run_id: str
+    random_forest_run_id: str    
     
 @dataclass
 class ModelEvaluationArtifact:

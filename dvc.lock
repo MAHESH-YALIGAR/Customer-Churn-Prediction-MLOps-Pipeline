@@ -15,16 +15,16 @@ stages:
       size: 2557
     - path: src/constants/__init__.py
       hash: md5
-      md5: bd5fff47ea188bf8bbed056ea82fa4a7
-      size: 1930
+      md5: 9de6f153f9a83ddc4623a8f4d79fa36e
+      size: 1992
     - path: src/entity/artifact_entity.py
       hash: md5
-      md5: 3010422ee9b3f863ab07ae26bb60d1ed
-      size: 875
+      md5: 37d4e702c1a7f83a18eacde954edf301
+      size: 1136
     - path: src/entity/config_entity.py
       hash: md5
-      md5: f5c6f6d6f957079bb8cbc61d98c38589
-      size: 2114
+      md5: 38c890e85e21aa118aed21a9685581a4
+      size: 2175
     - path: src/exception/__init__.py
       hash: md5
       md5: 5baf671152d73a06c9fb5eae8e07aa19
@@ -35,8 +35,8 @@ stages:
       size: 1428
     - path: src/utils.py
       hash: md5
-      md5: b88eafea22b77584b5088961db2dc91a
-      size: 932
+      md5: ce37cbf1719891d462c8499d91ec131c
+      size: 1777
     outs:
     - path: data/raw/customer_churn.csv
       hash: md5
@@ -61,16 +61,16 @@ stages:
       size: 8015
     - path: src/constants/__init__.py
       hash: md5
-      md5: bd5fff47ea188bf8bbed056ea82fa4a7
-      size: 1930
+      md5: 9de6f153f9a83ddc4623a8f4d79fa36e
+      size: 1992
     - path: src/entity/artifact_entity.py
       hash: md5
-      md5: 3010422ee9b3f863ab07ae26bb60d1ed
-      size: 875
+      md5: 37d4e702c1a7f83a18eacde954edf301
+      size: 1136
     - path: src/entity/config_entity.py
       hash: md5
-      md5: f5c6f6d6f957079bb8cbc61d98c38589
-      size: 2114
+      md5: 38c890e85e21aa118aed21a9685581a4
+      size: 2175
     - path: src/exception/__init__.py
       hash: md5
       md5: 5baf671152d73a06c9fb5eae8e07aa19
@@ -81,8 +81,8 @@ stages:
       size: 1428
     - path: src/utils.py
       hash: md5
-      md5: b88eafea22b77584b5088961db2dc91a
-      size: 932
+      md5: ce37cbf1719891d462c8499d91ec131c
+      size: 1777
     outs:
     - path: artifacts/data_validation_report.json
       hash: md5
@@ -112,16 +112,16 @@ stages:
       size: 6162
     - path: src/constants/__init__.py
       hash: md5
-      md5: bd5fff47ea188bf8bbed056ea82fa4a7
-      size: 1930
+      md5: 9de6f153f9a83ddc4623a8f4d79fa36e
+      size: 1992
     - path: src/entity/artifact_entity.py
       hash: md5
-      md5: 3010422ee9b3f863ab07ae26bb60d1ed
-      size: 875
+      md5: 37d4e702c1a7f83a18eacde954edf301
+      size: 1136
     - path: src/entity/config_entity.py
       hash: md5
-      md5: f5c6f6d6f957079bb8cbc61d98c38589
-      size: 2114
+      md5: 38c890e85e21aa118aed21a9685581a4
+      size: 2175
     - path: src/exception/__init__.py
       hash: md5
       md5: 5baf671152d73a06c9fb5eae8e07aa19
@@ -132,8 +132,8 @@ stages:
       size: 1428
     - path: src/utils.py
       hash: md5
-      md5: b88eafea22b77584b5088961db2dc91a
-      size: 932
+      md5: ce37cbf1719891d462c8499d91ec131c
+      size: 1777
     outs:
     - path: artifacts/transformed
       hash: md5
@@ -164,20 +164,20 @@ stages:
       size: 181072
     - path: src/Components/model_trainer.py
       hash: md5
-      md5: a38cd0fce916b54d70f9826521dbd813
-      size: 4918
+      md5: c2c2433e29dd3808afd8e0930485c75c
+      size: 7129
     - path: src/constants/__init__.py
       hash: md5
-      md5: bd5fff47ea188bf8bbed056ea82fa4a7
-      size: 1930
+      md5: 9de6f153f9a83ddc4623a8f4d79fa36e
+      size: 1992
     - path: src/entity/artifact_entity.py
       hash: md5
-      md5: 3010422ee9b3f863ab07ae26bb60d1ed
-      size: 875
+      md5: 37d4e702c1a7f83a18eacde954edf301
+      size: 1136
     - path: src/entity/config_entity.py
       hash: md5
-      md5: f5c6f6d6f957079bb8cbc61d98c38589
-      size: 2114
+      md5: 38c890e85e21aa118aed21a9685581a4
+      size: 2175
     - path: src/exception/__init__.py
       hash: md5
       md5: 5baf671152d73a06c9fb5eae8e07aa19
@@ -188,8 +188,8 @@ stages:
       size: 1428
     - path: src/utils.py
       hash: md5
-      md5: b88eafea22b77584b5088961db2dc91a
-      size: 932
+      md5: ce37cbf1719891d462c8499d91ec131c
+      size: 1777
     outs:
     - path: artifacts/models/decision_tree.pkl
       hash: md5
@@ -199,26 +199,27 @@ stages:
       hash: md5
       md5: ae473027caef41796c6fd00a5229c5f6
       size: 1231
+    - path: artifacts/models/model_run_ids.json
+      hash: md5
+      md5: 338d1925d1761ed9c01a227c8b6c9779
+      size: 183
     - path: artifacts/models/random_forest.pkl
       hash: md5
       md5: ed63657cae5f290f798b49937c58d54b
       size: 40819769
   model_evaluation:
     cmd: python -c "from src.Components.model_evaluation import ModelEvaluation;
-      from src.entity.artifact_entity import DataTransformationArtifact, 
-      ModelTrainerArtifact; from src.entity.config_entity import 
-      ModelEvaluationConfig; from src.utils import 
-      get_data_transformation_config; config = get_data_transformation_config();
-      ModelEvaluation( data_transformation_artifact=DataTransformationArtifact( 
+      from src.entity.artifact_entity import DataTransformationArtifact; from 
+      src.entity.config_entity import ModelEvaluationConfig; from src.utils 
+      import get_data_transformation_config, get_model_trainer_artifact; config 
+      = get_data_transformation_config(); ModelEvaluation( 
+      data_transformation_artifact=DataTransformationArtifact( 
       train_features_path=config.train_features_path, 
       test_features_path=config.test_features_path, 
       train_target_path=config.train_target_path, 
       test_target_path=config.test_target_path, 
       preprocessor_file_path=config.preprocessor_file_path ), 
-      model_trainer_artifact=ModelTrainerArtifact( 
-      logistic_regression_model_path='artifacts/models/logistic_regression.pkl',
-      decision_tree_model_path='artifacts/models/decision_tree.pkl', 
-      random_forest_model_path='artifacts/models/random_forest.pkl' ), 
+      model_trainer_artifact=get_model_trainer_artifact(), 
       model_evaluation_config=ModelEvaluationConfig( 
       model_evaluation_dir='artifacts/model_evaluation', 
       model_evaluation_report_path='artifacts/model_evaluation/model_evaluation_report.json'
@@ -232,6 +233,10 @@ stages:
       hash: md5
       md5: ae473027caef41796c6fd00a5229c5f6
       size: 1231
+    - path: artifacts/models/model_run_ids.json
+      hash: md5
+      md5: 338d1925d1761ed9c01a227c8b6c9779
+      size: 183
     - path: artifacts/models/random_forest.pkl
       hash: md5
       md5: ed63657cae5f290f798b49937c58d54b
@@ -246,20 +251,20 @@ stages:
       size: 45880
     - path: src/Components/model_evaluation.py
       hash: md5
-      md5: 2d01b24edc765bd93b88023bbbfdbd91
-      size: 5270
+      md5: f7d171991423d4e89b1b75a9987914f3
+      size: 7251
     - path: src/constants/__init__.py
       hash: md5
-      md5: bd5fff47ea188bf8bbed056ea82fa4a7
-      size: 1930
+      md5: 9de6f153f9a83ddc4623a8f4d79fa36e
+      size: 1992
     - path: src/entity/artifact_entity.py
       hash: md5
-      md5: 3010422ee9b3f863ab07ae26bb60d1ed
-      size: 875
+      md5: 37d4e702c1a7f83a18eacde954edf301
+      size: 1136
     - path: src/entity/config_entity.py
       hash: md5
-      md5: f5c6f6d6f957079bb8cbc61d98c38589
-      size: 2114
+      md5: 38c890e85e21aa118aed21a9685581a4
+      size: 2175
     - path: src/exception/__init__.py
       hash: md5
       md5: 5baf671152d73a06c9fb5eae8e07aa19
@@ -270,8 +275,8 @@ stages:
       size: 1428
     - path: src/utils.py
       hash: md5
-      md5: b88eafea22b77584b5088961db2dc91a
-      size: 932
+      md5: ce37cbf1719891d462c8499d91ec131c
+      size: 1777
     outs:
     - path: artifacts/model_evaluation/model_evaluation_report.json
       hash: md5
@@ -281,9 +286,9 @@ stages:
     cmd: python -c "import json; from pathlib import Path; from 
       src.Components.model_pusher import ModelPusher; from 
       src.entity.artifact_entity import DataTransformationArtifact, 
-      ModelTrainerArtifact, ModelEvaluationArtifact; from 
-      src.entity.config_entity import ModelPusherConfig; from src.utils import 
-      get_data_transformation_config; config = get_data_transformation_config();
+      ModelEvaluationArtifact; from src.entity.config_entity import 
+      ModelPusherConfig; from src.utils import get_data_transformation_config, 
+      get_model_trainer_artifact; config = get_data_transformation_config(); 
       best_model = 
       json.loads(Path('artifacts/model_evaluation/model_evaluation_report.json').read_text())['best_model'];
       ModelPusher( data_transformation_artifact=DataTransformationArtifact( 
@@ -292,10 +297,7 @@ stages:
       train_target_path=config.train_target_path, 
       test_target_path=config.test_target_path, 
       preprocessor_file_path=config.preprocessor_file_path ), 
-      model_trainer_artifact=ModelTrainerArtifact( 
-      logistic_regression_model_path='artifacts/models/logistic_regression.pkl',
-      decision_tree_model_path='artifacts/models/decision_tree.pkl', 
-      random_forest_model_path='artifacts/models/random_forest.pkl' ), 
+      model_trainer_artifact=get_model_trainer_artifact(), 
       model_evaluation_artifact=ModelEvaluationArtifact( 
       model_evaluation_report_path='artifacts/model_evaluation/model_evaluation_report.json',
       best_model_name=best_model['name'], 
@@ -318,6 +320,10 @@ stages:
       hash: md5
       md5: ae473027caef41796c6fd00a5229c5f6
       size: 1231
+    - path: artifacts/models/model_run_ids.json
+      hash: md5
+      md5: 338d1925d1761ed9c01a227c8b6c9779
+      size: 183
     - path: artifacts/models/random_forest.pkl
       hash: md5
       md5: ed63657cae5f290f798b49937c58d54b
@@ -328,20 +334,20 @@ stages:
       size: 7412
     - path: src/Components/model_pusher.py
       hash: md5
-      md5: 3ffe11b8915697fe7d35ad3b8f419d6b
-      size: 3808
+      md5: 4d5219f127208fcb717b35be15c26d7f
+      size: 6418
     - path: src/constants/__init__.py
       hash: md5
-      md5: bd5fff47ea188bf8bbed056ea82fa4a7
-      size: 1930
+      md5: 9de6f153f9a83ddc4623a8f4d79fa36e
+      size: 1992
     - path: src/entity/artifact_entity.py
       hash: md5
-      md5: 3010422ee9b3f863ab07ae26bb60d1ed
-      size: 875
+      md5: 37d4e702c1a7f83a18eacde954edf301
+      size: 1136
     - path: src/entity/config_entity.py
       hash: md5
-      md5: f5c6f6d6f957079bb8cbc61d98c38589
-      size: 2114
+      md5: 38c890e85e21aa118aed21a9685581a4
+      size: 2175
     - path: src/exception/__init__.py
       hash: md5
       md5: 5baf671152d73a06c9fb5eae8e07aa19
@@ -352,8 +358,8 @@ stages:
       size: 1428
     - path: src/utils.py
       hash: md5
-      md5: b88eafea22b77584b5088961db2dc91a
-      size: 932
+      md5: ce37cbf1719891d462c8499d91ec131c
+      size: 1777
     outs:
     - path: artifacts/model_pusher
       hash: md5

@@ -1,0 +1,12 @@
+services:
+  customer-churn-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    container_name: customer-churn-container
+
+    ports:
+      - "8000:8000"
+
+    restart: unless-stopped

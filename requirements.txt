@@ -17,3 +17,9 @@ python-multipart
 uvicorn
 jinja2
 imblearn
+fastapi
+uvicorn
+mlflow==3.17.2
+pandas
+scikit-learn
+joblib

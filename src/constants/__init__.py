@@ -68,6 +68,8 @@ DECISION_TREE_MODEL_PATH="artifacts/models/decision_tree.pkl"
 
 RANDOM_FOREST_MODEL_PATH="artifacts/models/random_forest.pkl"
 
+MODEL_RUN_IDS_PATH = "artifacts/models/model_run_ids.json"
+
 
 
 

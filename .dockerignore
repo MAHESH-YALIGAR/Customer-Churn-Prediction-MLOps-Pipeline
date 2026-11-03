@@ -1,0 +1,32 @@
+
+# Python virtual environments
+myenv/
+.venv/
+venv/
+
+# Git
+.git/
+.gitignore
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Jupyter notebooks and datasets
+Notebook/
+notebook/
+data/
+
+# DVC
+.dvc/
+.dvcignore
+
+# MLflow local tracking and artifacts
+mlartifacts/
+mlflow.db
+
+# Other unnecessary files
+.pytest_cache/
+.vscode/
+.idea/
+

@@ -93,13 +93,14 @@ stages:
       - artifacts/models/logistic_regression.pkl
       - artifacts/models/decision_tree.pkl
       - artifacts/models/random_forest.pkl
+      - artifacts/models/model_run_ids.json
 
   model_evaluation:
     cmd: >-
       python -c "from src.Components.model_evaluation import ModelEvaluation;
-      from src.entity.artifact_entity import DataTransformationArtifact, ModelTrainerArtifact;
+      from src.entity.artifact_entity import DataTransformationArtifact;
       from src.entity.config_entity import ModelEvaluationConfig;
-      from src.utils import get_data_transformation_config;
+      from src.utils import get_data_transformation_config, get_model_trainer_artifact;
       config = get_data_transformation_config();
       ModelEvaluation(
       data_transformation_artifact=DataTransformationArtifact(
@@ -109,11 +110,7 @@ stages:
       test_target_path=config.test_target_path,
       preprocessor_file_path=config.preprocessor_file_path
       ),
-      model_trainer_artifact=ModelTrainerArtifact(
-      logistic_regression_model_path='artifacts/models/logistic_regression.pkl',
-      decision_tree_model_path='artifacts/models/decision_tree.pkl',
-      random_forest_model_path='artifacts/models/random_forest.pkl'
-      ),
+      model_trainer_artifact=get_model_trainer_artifact(),
       model_evaluation_config=ModelEvaluationConfig(
       model_evaluation_dir='artifacts/model_evaluation',
       model_evaluation_report_path='artifacts/model_evaluation/model_evaluation_report.json'
@@ -125,6 +122,7 @@ stages:
       - artifacts/models/logistic_regression.pkl
       - artifacts/models/decision_tree.pkl
       - artifacts/models/random_forest.pkl
+      - artifacts/models/model_run_ids.json
       - src/Components/model_evaluation.py
       - src/entity/artifact_entity.py
       - src/entity/config_entity.py
@@ -141,9 +139,9 @@ stages:
       python -c "import json;
       from pathlib import Path;
       from src.Components.model_pusher import ModelPusher;
-      from src.entity.artifact_entity import DataTransformationArtifact, ModelTrainerArtifact, ModelEvaluationArtifact;
+      from src.entity.artifact_entity import DataTransformationArtifact, ModelEvaluationArtifact;
       from src.entity.config_entity import ModelPusherConfig;
-      from src.utils import get_data_transformation_config;
+      from src.utils import get_data_transformation_config, get_model_trainer_artifact;
       config = get_data_transformation_config();
       best_model = json.loads(Path('artifacts/model_evaluation/model_evaluation_report.json').read_text())['best_model'];
       ModelPusher(
@@ -154,11 +152,7 @@ stages:
       test_target_path=config.test_target_path,
       preprocessor_file_path=config.preprocessor_file_path
       ),
-      model_trainer_artifact=ModelTrainerArtifact(
-      logistic_regression_model_path='artifacts/models/logistic_regression.pkl',
-      decision_tree_model_path='artifacts/models/decision_tree.pkl',
-      random_forest_model_path='artifacts/models/random_forest.pkl'
-      ),
+      model_trainer_artifact=get_model_trainer_artifact(),
       model_evaluation_artifact=ModelEvaluationArtifact(
       model_evaluation_report_path='artifacts/model_evaluation/model_evaluation_report.json',
       best_model_name=best_model['name'],
@@ -175,6 +169,7 @@ stages:
       - artifacts/models/logistic_regression.pkl
       - artifacts/models/decision_tree.pkl
       - artifacts/models/random_forest.pkl
+      - artifacts/models/model_run_ids.json
       - artifacts/transformed/preprocessor.pkl
       - src/Components/model_pusher.py
       - src/entity/artifact_entity.py
