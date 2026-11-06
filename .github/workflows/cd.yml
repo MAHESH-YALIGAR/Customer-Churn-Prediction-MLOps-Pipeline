@@ -1,0 +1,37 @@
+
+name: Customer Churn MLOps CD
+
+on:
+  workflow_run:
+    workflows: ["Customer Churn MLOps CI"]
+    types:
+      - completed
+    branches:
+      - main
+
+jobs:
+  deploy:
+    if: github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy to AWS EC2
+        uses: appleboy/ssh-action@v1.2.2
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/customer-churn-api:latest
+
+            docker stop customer-churn-container || true
+
+            docker rm customer-churn-container || true
+
+            docker run -d \
+              --name customer-churn-container \
+              --restart unless-stopped \
+              -p 8000:8000 \
+              ${{ secrets.DOCKERHUB_USERNAME }}/customer-churn-api:latest
+
+            docker ps
