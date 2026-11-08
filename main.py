@@ -52,6 +52,7 @@ def main() -> None:
         model_pusher.initiate_model_pusher()
 
         logging.info("Best model: %s", evaluation_artifact.best_model_name)
+        logging.info("Best model: %s", evaluation_artifact.best_model_name)
         logging.info(
             "Best model F1 score: %s",
             evaluation_artifact.best_model_score,
